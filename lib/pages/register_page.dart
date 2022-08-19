@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo_state/models/person_model.dart';
+import 'package:flutter_codigo_state/providers/person_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/counter_provider.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -7,9 +12,13 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // CounterProvider _counterProvider = Provider.of<CounterProvider>(context);
+    PersonProvider _personProvider = Provider.of<PersonProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Register Page"),
+        actions: [],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -47,7 +56,16 @@ class RegisterPage extends StatelessWidget {
                 width: double.infinity,
                 height: 52.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+
+                    PersonModel person = PersonModel(
+                      name: nameController.text,
+                      lastName: lastNameController.text,
+                      address: addressController.text,
+                    );
+
+                    _personProvider.addNewPerson(person);
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
@@ -66,7 +84,9 @@ class RegisterPage extends StatelessWidget {
                 width: double.infinity,
                 height: 52.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _personProvider.deletePerson();
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
@@ -75,6 +95,27 @@ class RegisterPage extends StatelessWidget {
                   ),
                   child: Text(
                     "Eliminar",
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 52.0,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _personProvider.addProduct("Item 1");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14.0),
+                    ),
+                    primary: Colors.greenAccent,
+                  ),
+                  child: Text(
+                    "Agregar Producto",
                   ),
                 ),
               ),
