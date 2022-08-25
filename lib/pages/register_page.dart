@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_codigo_state/bloc/person/person_bloc.dart';
+import 'package:flutter_codigo_state/models/person_model.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -47,7 +50,14 @@ class RegisterPage extends StatelessWidget {
                 width: double.infinity,
                 height: 52.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    PersonModel model = PersonModel(
+                      name: nameController.text,
+                      lastName: lastNameController.text,
+                      address: addressController.text,
+                    );
+                    BlocProvider.of<PersonBloc>(context).add(AddNewPerson(model: model));
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
@@ -66,7 +76,9 @@ class RegisterPage extends StatelessWidget {
                 width: double.infinity,
                 height: 52.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<PersonBloc>(context).add(DeletePerson());
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),

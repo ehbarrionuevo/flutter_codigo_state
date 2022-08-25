@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_codigo_state/bloc/person/person_bloc.dart';
 import 'package:flutter_codigo_state/pages/home_page.dart';
 
 void main(){
@@ -11,10 +13,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "StateApp",
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (BuildContext context)=> PersonBloc()),
+      ],
+      child: MaterialApp(
+        title: "StateApp",
+        debugShowCheckedModeBanner: false,
+        home: HomePage(),
+      ),
     );
   }
 }

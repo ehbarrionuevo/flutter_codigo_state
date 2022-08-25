@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_codigo_state/bloc/person/person_bloc.dart';
 import 'package:flutter_codigo_state/pages/register_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -20,34 +22,41 @@ class HomePage extends StatelessWidget {
         title: Text("Home Page"),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Nombres: Dario Manuel",
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            const SizedBox(
-              height: 12.0,
-            ),
-            Text(
-              "Apellidos: Arias Montes",
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            const SizedBox(
-              height: 12.0,
-            ),
-            Text(
-              "Dirección: Av. Lima 213123",
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-          ],
+        child: BlocBuilder<PersonBloc, PersonState>(
+          builder: (BuildContext context, PersonState state) {
+            if (state.personModel != null) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Nombres: ${state.personModel!.name}",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  Text(
+                    "Apellidos: ${state.personModel!.lastName}",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  Text(
+                    "Dirección: ${state.personModel!.address}",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              );
+            }
+            return Text("No hay nada registrado");
+          },
         ),
       ),
     );
